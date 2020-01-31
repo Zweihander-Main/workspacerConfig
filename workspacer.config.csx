@@ -3,12 +3,14 @@
 #r "C:\Program Files\workspacer\plugins\workspacer.ActionMenu\workspacer.ActionMenu.dll"
 #r "C:\Program Files\workspacer\plugins\workspacer.FocusIndicator\workspacer.FocusIndicator.dll"
 
+
 using System;
 using System.Runtime.InteropServices;
 using workspacer;
 using workspacer.Bar;
 using workspacer.ActionMenu;
 using workspacer.FocusIndicator;
+using workspacer.Bar.Widgets;
 
 // https://stackoverflow.com/questions/19022789/hide-taskbar-in-winforms-application#19024531
 public class Taskbar
@@ -86,6 +88,9 @@ Action<IConfigContext> doConfig = (context) =>
 {
     var monitors = context.MonitorContainer.GetAllMonitors();
 
+    var titleWidget = new TitleWidget();
+    titleWidget.MonitorHasFocusColor = Color.Red;
+
     context.AddBar(new BarPluginConfig()
     {
         BarTitle = "workspacer.Bar",
@@ -93,7 +98,9 @@ Action<IConfigContext> doConfig = (context) =>
         FontSize = 10,
         DefaultWidgetForeground = Color.White,
         DefaultWidgetBackground = Color.Black,
-        Background = Color.Black
+        Background = Color.Black,
+        LeftWidgets = () => new IBarWidget[] { new WorkspaceWidget(),  new ActiveLayoutWidget(), new TextWidget("    "), titleWidget },
+        RightWidgets = () => new IBarWidget[] { new TimeWidget(1000, "ddd, M/dd/yyyy | h:mm tt") },
     });
     context.AddFocusIndicator();
     var actionMenu = context.AddActionMenu();
