@@ -54,7 +54,7 @@ Action<IConfigContext> doConfig = (context) =>
     // Ignore Program Filters
     context.WindowRouter.AddFilter((window) => !window.Title.Equals("Wox"));
     context.WindowRouter.AddFilter((window) => !window.Title.Equals("Everything"));
-    context.WindowRouter.AddFilter((window) => !window.Title.Equals("Cmder"));
+    // context.WindowRouter.AddFilter((window) => !window.Title.Equals("Cmder"));
     context.WindowRouter.AddFilter((window) => !window.Class.Equals("ApplicationFrameWindow"));
     context.WindowRouter.AddFilter((window) => !window.Title.Equals("MasterStartupHotkeys.ahk"));
     context.WindowRouter.AddFilter((window) => !window.Class.Equals("#32770")); // Deletion dialog
@@ -76,10 +76,10 @@ Action<IConfigContext> doConfig = (context) =>
     context.Keybinds.UnsubscribeAll();
 
     // Monitor bindings to store
-    var Mon1NumPad = Keys.NumPad6;
+    var Mon1NumPad = Keys.NumPad8;
     var Mon2NumPad = Keys.NumPad5;
-    var Mon3NumPad = Keys.NumPad8;
-    var Mon4Numpad = Keys.NumPad4;
+    var Mon3NumPad = Keys.NumPad4;
+    var Mon4Numpad = Keys.NumPad6;
     var MainModKey = KeyModifiers.LAlt;
     var SubModKey = KeyModifiers.LWin;
 
@@ -230,8 +230,8 @@ Action<IConfigContext> doConfig = (context) =>
     // context.Keybinds.Subscribe(MainModKey | MainModKey | KeyModifiers.LShift, Keys.I,
     //     () => context.ToggleConsoleWindow(), "toggle debug console");
 
-    // context.Keybinds.Subscribe(MainModKey | KeyModifiers.LShift, Keys.OemQuestion,
-    //     () => context.Keybinds.ShowKeybindDialog(), "open keybind window");
+    context.Keybinds.Subscribe(MainModKey | KeyModifiers.LShift, Keys.OemQuestion,
+        () => context.Keybinds.ShowKeybindDialog(), "open keybind window");
 
 };
 return doConfig;
